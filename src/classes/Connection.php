@@ -8,7 +8,7 @@ class Connection {
 */
 
 /* Curl post data */
-function __posts($url,$param)
+public function posts($url,$param)
 {
 	$curl = curl_init();
 	//set param
@@ -21,7 +21,7 @@ function __posts($url,$param)
   		CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
   		CURLOPT_CUSTOMREQUEST => "POST",
   		CURLOPT_POSTFIELDS => $param,
-  		CURLOPT_HTTPHEADER => array("cache-control: no-cache",),
+  		CURLOPT_HTTPHEADER => array("cache-control: no-cache"),
 	));
 
 	$response = curl_exec($curl);
@@ -37,7 +37,7 @@ function __posts($url,$param)
 }
 
 /* Curl get data */
-function __gets()
+public function gets()
 {
 
 }
