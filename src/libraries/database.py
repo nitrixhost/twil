@@ -6,7 +6,7 @@ def auth():
     try:
         return pymongo.MongoClient()
     except pymongo.errors.ConnectionFailure:
-         print "Failed to connect to server"
+         print("Failed to connect to server")
 
 #insert collection
 def insert():
@@ -20,11 +20,15 @@ def update():
 def delete():
     print("delete")
 
+#find collection
+def find():
+    print("find")
+
 #get collection
 def get(namadatabase,collectionname):
     client = auth()
     db = client[namadatabase]
     collection = db[collectionname].find()
-    print(list(collection))
+    return collection
 
     
