@@ -2,8 +2,10 @@ from flask import Flask, jsonify
 from flask import request
 from flask import abort
 from flask_httpauth import HTTPBasicAuth
+from flask_restful import Resource, Api
 
 app = Flask(__name__)
+api = Api(app)
 
 auth = HTTPBasicAuth()
 @auth.get_password
