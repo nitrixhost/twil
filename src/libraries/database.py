@@ -1,34 +1,45 @@
 import pymongo
 from pymongo import MongoClient
 
+namadatabase = "sms"
+collectionuser = "users"
+collectionsms = "collectionsms"
+
 #authentication
 def auth():
     try:
-        return pymongo.MongoClient()
-    except pymongo.errors.ConnectionFailure:
-         print("Failed to connect to server")
+        kon = pymongo.MongoClient()
+    except pymongo.errors.ConnectionFailure as detail:
+        return {"success":"no","reason":detail}
 
-#insert collection
-def insert():
-    print("insert")
+    return kon
 
-#update collection
-def update():
-    print("update")
-
-#delete collection
-def delete():
-    print("delete")
-
-#find collection
-def find():
-    print("find")
-
-#get collection
-def get(namadatabase,collectionname):
+def konek():
     client = auth()
     db = client[namadatabase]
-    collection = db[collectionname].find()
+    return db
+
+#insert collection
+def insertSms(id):
+    db = konek()
+    db[collectionsms].insert(id)
+
+def getSms():
+    db = konek()
+    collection = db[collectionsms].find()
+    return collection 
+
+def getSmsBySid(sid):
+    db = konek()
+    collection = db[collectionsms].find({"sid":sid})
     return collection
 
+def insertUser(id):
+    db = konek()
+    db[collectionuser].insert(id)
+
+def authUser(username,password):
+    db = konek()
+    cari = db[collectionuser].find({"username":username,"password":password})
+    return cari
     
