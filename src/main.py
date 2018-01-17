@@ -5,7 +5,7 @@ from flask import jsonify
 import libraries.database
 import libraries.users
 import libraries.sms
-from flask_jwt import JWT, jwt_required
+from flask_jwt import JWT, jwt_required, current_identity
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'sosd124/343as2338n'
@@ -24,8 +24,8 @@ class User(object):
     def __str__(self):
         return "User(id='%s')" % self.id
 
-def getallsms():
-    getter = libraries.database.getSms()
+def getallsms(ligin):
+    getter = libraries.database.getSms(ligin)
     collection = list(getter)
     for po in collection:
         yield {"sid":po.get('sid'),"from":po.get('from'),"to":po.get('to'),"body":po.get('body'),"status":po.get('status')}
@@ -61,13 +61,15 @@ class Messages(Resource):
     @jwt_required()
     def post(self):
         arguments = mes.parse_args()
-        lihat = libraries.sms.sendsms(arguments)
+        login = dict(current_identity)
+        lihat = libraries.sms.sendsms(arguments,login)
         return lihat
 
 class MessageList(Resource):
     @jwt_required()
     def get(self):
-        sam = getallsms()
+        ligin = dict(current_identity)
+        sam = getallsms(ligin)
         collection = list(sam)
         return jsonify(collection)
 

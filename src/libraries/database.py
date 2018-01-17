@@ -1,5 +1,6 @@
 import pymongo
 from pymongo import MongoClient
+import sys
 
 namadatabase = "sms"
 collectionuser = "users"
@@ -24,9 +25,9 @@ def insertSms(id):
     db = konek()
     db[collectionsms].insert(id)
 
-def getSms():
+def getSms(ligin):
     db = konek()
-    collection = db[collectionsms].find()
+    collection = db[collectionsms].find({"token":ligin.get('user_id')})
     return collection 
 
 def getSmsBySid(sid):
