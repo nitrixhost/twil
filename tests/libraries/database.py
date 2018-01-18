@@ -65,7 +65,7 @@ class Kontak(Auth):
 
     def getKontakCategory(self,param):
         db = self.konek()
-        cari = db[kontak].find(param)
+        cari = db[kontak].find({"token":param})
         return cari
 
     
